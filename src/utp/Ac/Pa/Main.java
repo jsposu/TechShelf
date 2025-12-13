@@ -36,7 +36,7 @@ public class Main {
                     break;
 
                 default:
-                    JOptionPane.showMessageDialog(null, 
+                    JOptionPane.showMessageDialog(null,
                             "Invalid option. Please try again.");
             }
         }
@@ -47,27 +47,25 @@ public class Main {
     // ------------------------------------
     private static void addProduct(ArrayList<Product> products) {
 
-        String name = JOptionPane.showInputDialog("Product Name:");
+        String name = inputText("Product Name:");
         if (name == null) return;
 
-        String description = JOptionPane.showInputDialog("Product Description:");
+        String description = inputText("Product Description:");
         if (description == null) return;
 
-        String manufacturer = JOptionPane.showInputDialog("Manufacturer:");
+        String manufacturer = inputText("Manufacturer:");
         if (manufacturer == null) return;
 
-        String model = JOptionPane.showInputDialog("Model:");
+        String model = inputText("Model:");
         if (model == null) return;
 
-        double price = Double.parseDouble(
-                JOptionPane.showInputDialog("Price:")
-        );
+        double price = inputDouble("Price:");
+        if (Double.isNaN(price)) return; // Cancel pressed
 
-        int stock = Integer.parseInt(
-                JOptionPane.showInputDialog("Stock Quantity:")
-        );
+        int stock = inputInt("Stock Quantity:");
+        if (stock == Integer.MIN_VALUE) return; // Cancel pressed
 
-        // Generate product ID automatically (P001, P002, etc.)
+        // Generate ID automatically
         String id = String.format("P%03d", productCounter);
         productCounter++;
 
@@ -100,5 +98,57 @@ public class Main {
         }
 
         JOptionPane.showMessageDialog(null, sb.toString());
+    }
+
+    // ------------------------------------
+    //      VALIDATION METHODS
+    // ------------------------------------
+
+    // Validate text fields (not empty, allow cancel)
+    private static String inputText(String message) {
+        while (true) {
+            String input = JOptionPane.showInputDialog(message);
+
+            if (input == null) return null;  // cancel pressed
+            if (!input.trim().isEmpty()) return input.trim();
+
+            JOptionPane.showMessageDialog(null, "Error: this field cannot be empty.");
+        }
+    }
+
+    // Validate double (price) — cancel returns NaN
+    private static double inputDouble(String message) {
+        while (true) {
+            String input = JOptionPane.showInputDialog(message);
+
+            if (input == null) return Double.NaN;  // cancel
+
+            try {
+                double value = Double.parseDouble(input);
+                if (value >= 0) return value;
+
+                JOptionPane.showMessageDialog(null, "Error: price cannot be negative.");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: enter a valid number.");
+            }
+        }
+    }
+
+    // Validate integer (stock) — cancel returns Integer.MIN_VALUE
+    private static int inputInt(String message) {
+        while (true) {
+            String input = JOptionPane.showInputDialog(message);
+
+            if (input == null) return Integer.MIN_VALUE;  // cancel
+
+            try {
+                int value = Integer.parseInt(input);
+                if (value >= 0) return value;
+
+                JOptionPane.showMessageDialog(null, "Error: stock cannot be negative.");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: enter a valid integer.");
+            }
+        }
     }
 }
