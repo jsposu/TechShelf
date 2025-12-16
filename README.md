@@ -7,7 +7,7 @@ The Technology Store Management System is a software solution designed to help t
 The system provides real-time tracking of product stock, automates the sales process with invoice generation, and maintains customer records for enhanced service.
 Built with Java, the system ensures reliability and scalability for the store's growing needs.
 
-## How to Compile and Run (Windows & Linux)
+## How to Compile and Run (Windows, Linux & MacOS)
 ### Windows
 1. Open CMD or PowerShell.
 2. Navigate to the project folder:
@@ -20,7 +20,7 @@ Built with Java, the system ensures reliability and scalability for the store's 
 5. Run the program:
    java -cp bin Main
 
-### Linux
+### Linux & MacOS
 1. Open a terminal.
 2. Navigate to the project folder:
    cd ~/TechShelf
