@@ -1,7 +1,7 @@
 # TechShelf
 System for a Technology Store Management (Sistema de Gestión de Tienda de Tecnología)
 
-![UML Diagram image](/docs/uml/imageV2.png "UML Diagram")
+![UML Diagram image](/docs/uml/Proyecto Final UMLVERSION 3.drawio.png "UML Diagram")
 
 The Technology Store Management System is a software solution designed to help the operations of a technology retail store. It integrates inventory control, sales processing, and customer sales management.
 The system provides real-time tracking of product stock, automates the sales process with invoice generation, and maintains customer records for enhanced service.
