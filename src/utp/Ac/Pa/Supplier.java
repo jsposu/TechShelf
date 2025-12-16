@@ -1,26 +1,34 @@
+
+import java.time.LocalDate;
+
 public class Supplier {
 
-    private String supplierId;
-    private String name;
+    private int supplierId;
+    private String nameSupplier;
     private String phone;
     private String email;
     private String address;
+    private MetodosPagos MetodoPagoS;
+    private LocalDate registrationDate;
 
-    public Supplier(String supplierId, String name, String phone, String email, String address) {
+    public Supplier(int supplierId, String nameSupplier, String phone, String email, String address, 
+                   LocalDate registrationDate, MetodosPagos MetodoPagoS) {
         this.supplierId = supplierId;
-        this.name = name;
+        this.nameSupplier = nameSupplier;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.MetodoPagoS = MetodoPagoS;
+        this.registrationDate = registrationDate;
     }
 
     // Getters
-    public String getSupplierId() {
+    public int getSupplierId() {
         return supplierId;
     }
 
     public String getName() {
-        return name;
+        return nameSupplier;
     }
 
     public String getPhone() {
@@ -33,5 +41,9 @@ public class Supplier {
 
     public String getAddress() {
         return address;
+    }
+
+        public MetodosPagos getMetodoPagoS() {
+        return MetodoPagoS;
     }
 }
