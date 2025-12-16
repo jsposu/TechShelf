@@ -1,0 +1,6 @@
+public enum Permiso {
+    CREAR_USUARIO,
+    REALIZAR_VENTA,
+    GESTIONAR_STOCK,
+    VER_REPORTES
+}
