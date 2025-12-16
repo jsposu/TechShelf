@@ -1,5 +1,9 @@
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 
 public class Main {
 
@@ -8,6 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Roles> listaRoles = new ArrayList<>();
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         boolean running = true;
 
         while (running) {
@@ -15,7 +21,14 @@ public class Main {
                     "TECHSHELF MENU\n\n" +
                     "1. Add Product\n" +
                     "2. Show Products\n" +
-                    "3. Exit\n\n" +
+                    "3. Add Users\n" +
+                    "4. Add Roles\n" +
+                    "5. Add Suppliers\n" +
+                    "6. Add Customer\n" +
+                    "7. Add Warranty\n" +
+                    "8. Add ListapreCAB\n" +
+                    "9. Add LispreDT\n" +
+                    "10. Exit\n\n" +
                     "Choose an option:"
             );
 
@@ -32,6 +45,15 @@ public class Main {
                     break;
 
                 case "3":
+                    AddUsuario(listaUsuarios, listaRoles, LocalDate.now(), LocalDate.now(),
+                    "Nombre", "ApellidoPaterno", "ApellidoMaterno",
+                    true); 
+                    break;
+                case "4":
+                    addRoles(listaRoles);
+
+                    break;
+                case "10":
                     running = false;
                     break;
 
@@ -42,12 +64,170 @@ public class Main {
         }
     }
 
+    // CREAR ROLES 
+    private static void addRoles(ArrayList<Roles> roles) {
+
+    String roleName = JOptionPane.showInputDialog("Enter Role Name:");
+    if (roleName == null || roleName.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Role name cannot be empty.");
+        return;
+    }
+/*
+    String roleDescription = JOptionPane.showInputDialog("Enter Role Description:");
+    if (roleDescription == null || roleDescription.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Role description cannot be empty.");
+        return;
+    }*/
+
+    int newRoleId = roles.size() + 1;
+
+    Roles newRole = new Roles(newRoleId, roleName.trim() /*, roleDescription.trim() */, true);
+    roles.add(newRole);
+
+    JOptionPane.showMessageDialog(null,
+            "Role added successfully!" +
+            "\nID: " + newRoleId +
+            "\nName: " + roleName+
+            "\nEstado: " + true);
+            //"\nDescription: " + roleDescription);
+}
+
+    //crear usuarios
+    private static void AddUsuario(ArrayList<Usuario> usuarios, ArrayList<Roles> roles, LocalDate FNacimiento, LocalDate FIngreso,
+                   String nombre, String ApellidoPaterno, String ApellidoMaterno,
+                    boolean estado) {
+
+        String username = JOptionPane.showInputDialog("Enter Username:");
+        if (username == null || username.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Username cannot be empty.");
+            return;
+        }
+
+        String password = JOptionPane.showInputDialog("Enter Password:");
+        if (password == null || password.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Password cannot be empty.");
+            return;
+        }
+
+        StringBuilder roleOptions = new StringBuilder("Select Role by ID:\n");
+        for (Roles role : roles) {
+            roleOptions.append(role.getId()).append(". ").append(role.getName()).append("\n");
+        }
+
+        String roleIdStr = JOptionPane.showInputDialog(roleOptions.toString());
+        if (roleIdStr == null || roleIdStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Role selection cannot be empty.");
+            return;
+        }
+
+        int roleId;
+        try {
+            roleId = Integer.parseInt(roleIdStr.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid Role ID.");
+            return;
+        }
+
+        Roles selectedRole = null;
+        for (Roles role : roles) {
+            if (role.getId() == roleId) {
+                selectedRole = role;
+                break;
+            }
+        }
+
+        if (selectedRole == null) {
+            JOptionPane.showMessageDialog(null, "Role not found.");
+            return;
+        }
+
+        String nombreU = JOptionPane.showInputDialog("Enter Nombre:");
+        if (nombreU == null || nombreU.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre cannot be empty.");
+            return;
+        }
+
+        String ApellidoPaternoU = JOptionPane.showInputDialog("Enter Apellido Paterno:");
+        if (ApellidoPaternoU == null || ApellidoPaternoU.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Apellido Paterno cannot be empty.");
+            return;
+        }
+
+        String ApellidoMaternoU = JOptionPane.showInputDialog("Enter Apellido Materno:");
+        if (ApellidoMaternoU == null || ApellidoMaternoU.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Apellido Materno cannot be empty.");
+            return;
+        }
+
+        //String ApellidoCasada = JOptionPane.showInputDialog("Enter Apellido Casada:");
+        //String UltPassword = JOptionPane.showInputDialog("Enter Ult Password:");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // ===== FECHA DE NACIMIENTO =====
+        LocalDate FNacimientoU = null;
+        try {
+        String txtFNacimiento = JOptionPane.showInputDialog(
+        "Ingrese Fecha de Nacimiento (dd/MM/yyyy):"
+        );
+
+        if (txtFNacimiento == null || txtFNacimiento.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede estar vacía");
+        return;
+        }
+        FNacimientoU = LocalDate.parse(txtFNacimiento.trim(), formato);
+
+        } catch (DateTimeParseException e) {
+         JOptionPane.showMessageDialog(null, "Formato inválido. Use dd/MM/yyyy");
+         return;
+       }
+
+       // ===== FECHA DE INGRESO =====
+        LocalDate FIngresoU = null;
+        try {
+        String txtFIngreso = JOptionPane.showInputDialog(
+        "Ingrese Fecha de Ingreso (dd/MM/yyyy):"
+       );
+
+       if (txtFIngreso == null || txtFIngreso.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "La fecha de ingreso no puede estar vacía");
+        return;
+      }
+
+       FIngresoU = LocalDate.parse(txtFIngreso.trim(), formato);
+
+     } catch (DateTimeParseException e) {
+      JOptionPane.showMessageDialog(null, "Formato inválido. Use dd/MM/yyyy");
+      return;
+     }       
+
+        //LocalDate FecModPass = LocalDate.now(); // Placeholder, replace with actual input
+        boolean estadoU = true; // Placeholder, replace with actual input 
+
+        Usuario newUser = new Usuario(username.trim(), password.trim(), selectedRole, FNacimientoU, FIngresoU,
+                   nombre.trim(), ApellidoPaternoU.trim(), ApellidoMaternoU.trim(), estadoU);
+        usuarios.add(newUser);
+
+        JOptionPane.showMessageDialog(null,
+                "User added successfully!" +
+                "\nUsername: " + username +
+                "\nRole: " + selectedRole.getName() +
+                "\nNombre: " + nombreU +
+                "\nApellido Paterno: " + ApellidoPaternoU +
+                "\nApellido Materno: " + ApellidoMaternoU +
+                /*"\nApellido Casada: " + ApellidoCasada +
+                "\nUlt Password: " + UltPassword + */
+                "\nFNacimiento: " + FNacimientoU +
+                "\nFIngreso: " + FIngresoU +
+                //"\nFecModPass: " + FecModPass +
+                "\nEstado: " + estadoU);
+    }
+
     // ------------------------------------
     //      ADD NEW PRODUCT
     // ------------------------------------
     private static void addProduct(ArrayList<Product> products) {
 
-        String name = inputText("Product Name:");
+        String name = inputText("Product Name.:");
         if (name == null) return;
 
         String description = inputText("Product Description:");
@@ -133,6 +313,26 @@ public class Main {
             }
         }
     }
+
+    // Validate integer (stock) — cancel returns Integer.MIN_VALUE
+    private static int inputInt(String message) {
+        while (true) {
+            String input = JOptionPane.showInputDialog(message);
+
+            if (input == null) return Integer.MIN_VALUE;  // cancel
+
+            try {
+                int value = Integer.parseInt(input);
+                if (value >= 0) return value;
+
+                JOptionPane.showMessageDialog(null, "Error: stock cannot be negative.");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: enter a valid integer.");
+            }
+        }
+    }
+
+}}
 
     // Validate integer (stock) — cancel returns Integer.MIN_VALUE
     private static int inputInt(String message) {
