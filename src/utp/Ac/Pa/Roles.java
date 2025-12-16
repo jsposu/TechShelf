@@ -1,18 +1,15 @@
 import java.util.Set;
 import java.util.HashSet;
 
-
-public class Roles {
+public class Role {
 
     private int idRole;
     private String name;
-    private String description;
     private Set<Permiso> permisos;
 
-    public Roles(int idRole, String name, String description) {
+    public Role(int idRole, String name) {
         this.idRole = idRole;
         this.name = name;
-        this.description = description;
         this.permisos = new HashSet<>();
     }
 
