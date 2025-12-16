@@ -14,6 +14,8 @@ public class Main {
         ArrayList<Product> products = new ArrayList<>();
         ArrayList<Roles> listaRoles = new ArrayList<>();
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        ArrayList<Supplier> listasuppliers = new ArrayList<>();
+        ArrayList<MetodosPagos> listasMetodosPagos = new ArrayList<>();
         boolean running = true;
 
         while (running) {
@@ -24,7 +26,7 @@ public class Main {
                     "3. Add Users\n" +
                     "4. Add Roles\n" +
                     "5. Add Suppliers\n" +
-                    "6. Add Customer\n" +
+                    "6. Add Metodos de Pago\n" +
                     "7. Add Warranty\n" +
                     "8. Add ListapreCAB\n" +
                     "9. Add LispreDT\n" +
@@ -51,7 +53,12 @@ public class Main {
                     break;
                 case "4":
                     addRoles(listaRoles);
-
+                    break;
+                case "5":
+                    addSuppliers(listasuppliers,listasMetodosPagos);
+                    break;
+                case "6":
+                    AddMetodosPagos(listasMetodosPagos);
                     break;
                 case "10":
                     running = false;
@@ -63,6 +70,121 @@ public class Main {
             }
         }
     }
+
+    // CREAR METODOS DE PAGOS 
+    private static void AddMetodosPagos(ArrayList<MetodosPagos> metodosPagos) {
+
+        String nombreMetodoPago = JOptionPane.showInputDialog("Enter Metodo de Pago Name:");
+        if (nombreMetodoPago == null || nombreMetodoPago.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Metodo de Pago name cannot be empty.");
+            return;
+        }
+
+        // Generate Metodo de Pago ID automatically
+        int newMetodoPagoId = metodosPagos.size() + 1;
+
+        MetodosPagos newMetodoPago = new MetodosPagos(newMetodoPagoId, nombreMetodoPago.trim());
+        metodosPagos.add(newMetodoPago);
+
+        JOptionPane.showMessageDialog(null,
+                "Metodo de Pago added successfully!" +
+                "\nID: " + newMetodoPagoId +
+                "\nName: " + nombreMetodoPago);
+    }
+
+
+// CREAR SUPPLIERS
+    private static void addSuppliers(
+        ArrayList<Supplier> suppliers,
+        ArrayList<MetodosPagos> metodosPagos) {
+
+    String nameSupplier = JOptionPane.showInputDialog("Enter Supplier Name:");
+    if (nameSupplier == null || nameSupplier.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Supplier name cannot be empty.");
+        return;
+    }
+
+    String phone = JOptionPane.showInputDialog("Enter Phone:");
+    if (phone == null || phone.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Phone cannot be empty.");
+        return;
+    }
+
+    String email = JOptionPane.showInputDialog("Enter Email:");
+    if (email == null || email.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Email cannot be empty.");
+        return;
+    }
+
+    String address = JOptionPane.showInputDialog("Enter Address:");
+    if (address == null || address.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Address cannot be empty.");
+        return;
+    }
+
+    // Mostrar métodos de pago
+    StringBuilder metodoPagoOptions = new StringBuilder("Select Metodo de pago by ID:\n");
+    for (MetodosPagos metodoPago : metodosPagos) {
+        metodoPagoOptions
+            .append(metodoPago.getIdMetodoPago())
+            .append(". ")
+            .append(metodoPago.getNombreMetodoPago())
+            .append("\n");
+    }
+
+    String metodoPagoStr = JOptionPane.showInputDialog(metodoPagoOptions.toString());
+    if (metodoPagoStr == null || metodoPagoStr.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Metodo de pago selection cannot be empty.");
+        return;
+    }
+
+    int idMetodoPago;
+    try {
+        idMetodoPago = Integer.parseInt(metodoPagoStr.trim());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid MetodoPago ID.");
+        return;
+    }
+
+    // Buscar método de pago seleccionado
+    MetodosPagos selectedMetodoPago = null;
+    for (MetodosPagos metodoPago : metodosPagos) {
+        if (metodoPago.getIdMetodoPago() == idMetodoPago) {
+            selectedMetodoPago = metodoPago;
+            break;
+        }
+    }
+
+    if (selectedMetodoPago == null) {
+        JOptionPane.showMessageDialog(null, "Metodo de pago not found.");
+        return;
+    }
+
+    // Generar ID automático
+    int supplierId = suppliers.size() + 1;
+
+    Supplier newSupplier = new Supplier(
+            supplierId,
+            nameSupplier,
+            phone,
+            email,
+            address,
+            LocalDate.now(),
+            selectedMetodoPago
+    );
+
+    suppliers.add(newSupplier);
+
+    JOptionPane.showMessageDialog(null,
+            "Supplier added successfully!" +
+            "\nID: " + supplierId +
+            "\nName: " + nameSupplier +
+            "\nPhone: " + phone +
+            "\nEmail: " + email +
+            "\nAddress: " + address +
+            "\nPayment Method: " + selectedMetodoPago.getNombreMetodoPago());
+}
+
 
     // CREAR ROLES 
     private static void addRoles(ArrayList<Roles> roles) {
@@ -90,7 +212,7 @@ public class Main {
             "\nName: " + roleName+
             "\nEstado: " + true);
             //"\nDescription: " + roleDescription);
-}
+        }
 
     //crear usuarios
     private static void AddUsuario(ArrayList<Usuario> usuarios, ArrayList<Roles> roles, LocalDate FNacimiento, LocalDate FIngreso,
@@ -332,23 +454,4 @@ public class Main {
         }
     }
 
-}}
-
-    // Validate integer (stock) — cancel returns Integer.MIN_VALUE
-    private static int inputInt(String message) {
-        while (true) {
-            String input = JOptionPane.showInputDialog(message);
-
-            if (input == null) return Integer.MIN_VALUE;  // cancel
-
-            try {
-                int value = Integer.parseInt(input);
-                if (value >= 0) return value;
-
-                JOptionPane.showMessageDialog(null, "Error: stock cannot be negative.");
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: enter a valid integer.");
-            }
-        }
-    }
 }
