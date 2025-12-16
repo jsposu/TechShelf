@@ -16,7 +16,7 @@ Built with Java, the system ensures reliability and scalability for the store's 
    java -version
    javac -version
 4. Compile all Java files:
-   javac -d bin src\*.java
+   javac -d bin "src\utp\Ac\Pa\*.java"
 5. Run the program:
    java -cp bin Main
 
@@ -28,7 +28,7 @@ Built with Java, the system ensures reliability and scalability for the store's 
    java -version
    javac -version
 4. Compile the project:
-   javac -d bin src/*.java
+   javac -d bin src/utp/Ac/Pa/*.java
 5. Run the program:
    java -cp bin Main
 
