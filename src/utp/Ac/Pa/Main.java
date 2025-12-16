@@ -26,10 +26,10 @@ public class Main {
                     "3. Add Users\n" +
                     "4. Add Roles\n" +
                     "5. Add Suppliers\n" +
-                    "6. Add Metodos de Pago\n" +
-                    "7. Add Warranty\n" +
-                    "8. Add ListapreCAB\n" +
-                    "9. Add LispreDT\n" +
+                    "6. Add Payment Methods\n" +
+                    //"7. Add Warranty\n" +
+                    //"8. Add ListapreCAB\n" +
+                    //"9. Add LispreDT\n" +
                     "10. Exit\n\n" +
                     "Choose an option:"
             );
@@ -74,9 +74,9 @@ public class Main {
     // CREAR METODOS DE PAGOS 
     private static void AddMetodosPagos(ArrayList<MetodosPagos> metodosPagos) {
 
-        String nombreMetodoPago = JOptionPane.showInputDialog("Enter Metodo de Pago Name:");
+        String nombreMetodoPago = JOptionPane.showInputDialog("Enter Payment Method Name:");
         if (nombreMetodoPago == null || nombreMetodoPago.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Metodo de Pago name cannot be empty.");
+            JOptionPane.showMessageDialog(null, "Payment method name cannot be empty.");
             return;
         }
 
@@ -87,7 +87,7 @@ public class Main {
         metodosPagos.add(newMetodoPago);
 
         JOptionPane.showMessageDialog(null,
-                "Metodo de Pago added successfully!" +
+                "Payment method added successfully!" +
                 "\nID: " + newMetodoPagoId +
                 "\nName: " + nombreMetodoPago);
     }
@@ -123,7 +123,7 @@ public class Main {
     }
 
     // Mostrar métodos de pago
-    StringBuilder metodoPagoOptions = new StringBuilder("Select Metodo de pago by ID:\n");
+    StringBuilder metodoPagoOptions = new StringBuilder("Select Payment Method by ID:\n");
     for (MetodosPagos metodoPago : metodosPagos) {
         metodoPagoOptions
             .append(metodoPago.getIdMetodoPago())
@@ -134,7 +134,7 @@ public class Main {
 
     String metodoPagoStr = JOptionPane.showInputDialog(metodoPagoOptions.toString());
     if (metodoPagoStr == null || metodoPagoStr.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Metodo de pago selection cannot be empty.");
+        JOptionPane.showMessageDialog(null, "Payment Method selection cannot be empty.");
         return;
     }
 
@@ -156,7 +156,7 @@ public class Main {
     }
 
     if (selectedMetodoPago == null) {
-        JOptionPane.showMessageDialog(null, "Metodo de pago not found.");
+        JOptionPane.showMessageDialog(null, "Payment method not found.");
         return;
     }
 
@@ -210,7 +210,7 @@ public class Main {
             "Role added successfully!" +
             "\nID: " + newRoleId +
             "\nName: " + roleName+
-            "\nEstado: " + true);
+            "\nStatus: " + true);
             //"\nDescription: " + roleDescription);
         }
 
@@ -263,21 +263,21 @@ public class Main {
             return;
         }
 
-        String nombreU = JOptionPane.showInputDialog("Enter Nombre:");
+        String nombreU = JOptionPane.showInputDialog("Enter Name:");
         if (nombreU == null || nombreU.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nombre cannot be empty.");
+            JOptionPane.showMessageDialog(null, "Name cannot be empty.");
             return;
         }
 
-        String ApellidoPaternoU = JOptionPane.showInputDialog("Enter Apellido Paterno:");
+        String ApellidoPaternoU = JOptionPane.showInputDialog("Enter Last Name:");
         if (ApellidoPaternoU == null || ApellidoPaternoU.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Apellido Paterno cannot be empty.");
+            JOptionPane.showMessageDialog(null, "Last name cannot be empty.");
             return;
         }
 
-        String ApellidoMaternoU = JOptionPane.showInputDialog("Enter Apellido Materno:");
+        String ApellidoMaternoU = JOptionPane.showInputDialog("Enter Second Last Name:");
         if (ApellidoMaternoU == null || ApellidoMaternoU.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Apellido Materno cannot be empty.");
+            JOptionPane.showMessageDialog(null, "Second Last Name cannot be empty.");
             return;
         }
 
@@ -289,17 +289,17 @@ public class Main {
         LocalDate FNacimientoU = null;
         try {
         String txtFNacimiento = JOptionPane.showInputDialog(
-        "Ingrese Fecha de Nacimiento (dd/MM/yyyy):"
+        "Enter date of birth (dd/MM/yyyy):"
         );
 
         if (txtFNacimiento == null || txtFNacimiento.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede estar vacía");
+        JOptionPane.showMessageDialog(null, "Date of birth cannot be empty");
         return;
         }
         FNacimientoU = LocalDate.parse(txtFNacimiento.trim(), formato);
 
         } catch (DateTimeParseException e) {
-         JOptionPane.showMessageDialog(null, "Formato inválido. Use dd/MM/yyyy");
+         JOptionPane.showMessageDialog(null, "Invalid Format. Use dd/MM/yyyy");
          return;
        }
 
@@ -307,18 +307,18 @@ public class Main {
         LocalDate FIngresoU = null;
         try {
         String txtFIngreso = JOptionPane.showInputDialog(
-        "Ingrese Fecha de Ingreso (dd/MM/yyyy):"
+        "Enter hire date (Fecha de ingreso) (dd/MM/yyyy):"
        );
 
        if (txtFIngreso == null || txtFIngreso.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "La fecha de ingreso no puede estar vacía");
+        JOptionPane.showMessageDialog(null, "hire date cannot be empty");
         return;
       }
 
        FIngresoU = LocalDate.parse(txtFIngreso.trim(), formato);
 
      } catch (DateTimeParseException e) {
-      JOptionPane.showMessageDialog(null, "Formato inválido. Use dd/MM/yyyy");
+      JOptionPane.showMessageDialog(null, "Invalid Format. Use dd/MM/yyyy");
       return;
      }       
 
@@ -333,15 +333,15 @@ public class Main {
                 "User added successfully!" +
                 "\nUsername: " + username +
                 "\nRole: " + selectedRole.getName() +
-                "\nNombre: " + nombreU +
-                "\nApellido Paterno: " + ApellidoPaternoU +
-                "\nApellido Materno: " + ApellidoMaternoU +
+                "\nName: " + nombreU +
+                "\nLast Name: " + ApellidoPaternoU +
+                "\nSecond last name: " + ApellidoMaternoU +
                 /*"\nApellido Casada: " + ApellidoCasada +
                 "\nUlt Password: " + UltPassword + */
-                "\nFNacimiento: " + FNacimientoU +
-                "\nFIngreso: " + FIngresoU +
+                "\nDbirth: " + FNacimientoU +
+                "\nHireDate: " + FIngresoU +
                 //"\nFecModPass: " + FecModPass +
-                "\nEstado: " + estadoU);
+                "\nStatus: " + estadoU);
     }
 
     // ------------------------------------
